@@ -53,23 +53,23 @@ Saat dokumen PDF diupload, teksnya dipotong-potong menjadi bagian kecil (chunk) 
 
 **Fungsi:** *(Jelaskan dengan kata-katamu sendiri apa fungsi dari CHUNK_SIZE)*
 
-> Jawab: ...
+> Jawab: CHUNK_SIZE berfungsi untuk menentukan ukuran potongan teks (chunk) dari dokumen yang akan diproses oleh sistem RAG. Semakin kecil chunk, semakin detail jawaban yang diberikan, sedangkan semakin besar chunk, semakin banyak konteks dalam satu bagian.
 
 **Pengaruhnya:**
 
 | Range Nilai | Efek |
 | --- | --- |
-| **Kecil (100–200)** | *(Jelaskan pengaruhnya terhadap presisi dan kelengkapan konteks)* |
-| **Sedang (250–400)** ⭐ Recommended | *(Jelaskan mengapa range ini direkomendasikan)* |
-| **Besar (500–1000)** | *(Jelaskan pengaruhnya terhadap pencarian dan relevansi)* |
+| **Kecil (100–200)** | *Chunk menjadi lebih spesifik dan lebih akurat, tapi sering kehilangan konteks karena informasi terpecah terlalu kecil.* |
+| **Sedang (250–400)** ⭐ Recommended | *Range ini paling di rekomendasikan karena seimbang antara konteks dan detail dari jawaban. Jadi hasil jawaban lebih relevan dan jawaban lebih lengkap* |
+| **Besar (500–1000)** | *Terlalu banyak konteks, tetapi jawabannya jadi kurang akurat karena terlalu banyak informasi* |
 
 **Pertanyaan Refleksi:**
 
 * Chunk besar atau kecil yang lebih tepat untuk dokumen yang kamu tes? Mengapa?
-  > Jawab: ...
+  > Jawab: spesifiknya, chunk dengan range sekitar 300 yang lebih tepat, karena konteks dan akurasi itu lebih seimbang. 
 
 * Apa yang terjadi kalau jawaban terasa "terpotong" atau kurang konteks? Parameter mana yang harus diubah?
-  > Jawab: ...
+  > Jawab: jawaban menjadi tidak akurat, parameter yang harus di ubah adalah CHUNK_SIZE. CHUNK_SIZE harus di tingkatkan agar konteks lebih lengkap
 
 ---
 
@@ -85,15 +85,15 @@ Setelah pertanyaan diubah jadi vektor, sistem mencari chunk yang paling mirip. `
 
 **Fungsi:** *(Jelaskan dengan kata-katamu sendiri apa fungsi dari TOP_K_INITIAL)*
 
-> Jawab: ...
+> Jawab: Menentukan chunks yang dipilih pada tahap pencarian awal untuk memastikan informasi yang luas sebelum melalui proses penyaringan sekunder
 
 **Pengaruhnya:**
 
 | Range Nilai | Efek |
 | --- | --- |
-| **Kecil (5–10)** | *(Jelaskan pengaruhnya terhadap kecepatan dan recall)* |
-| **Sedang (15–25)** ⭐ Recommended | *(Jelaskan mengapa range ini direkomendasikan)* |
-| **Besar (30–50)** | *(Jelaskan pengaruhnya terhadap recall dan waktu proses)* |
+| **Kecil (5–10)** | *Proses lebih cepat, tetapi kemungkinan kehilangan informasi penting* |
+| **Sedang (15–25)** ⭐ Recommended | *Memberikan keseimbangan antara kecepatan dan kelengkapan kandidat.* |
+| **Besar (30–50)** | *Recall lebih tinggi karena banyak kandidat diambil, tetapi waktu proses lebih lama.* |
 
 > 💡 **Catatan:** Nilai ini hanya berpengaruh signifikan jika `USE_RERANKER = True`. Tanpa reranker, yang dipakai langsung hanya `FINAL_TOP_M` teratas.
 
